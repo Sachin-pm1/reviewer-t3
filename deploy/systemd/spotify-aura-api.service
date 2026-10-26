@@ -1,0 +1,14 @@
+[Unit]
+Description=Spotify Aura - FastAPI backend
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/reviewer-t3/spotify-aura-backend
+ExecStart=/home/ubuntu/reviewer-t3/spotify-aura-backend/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8010
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

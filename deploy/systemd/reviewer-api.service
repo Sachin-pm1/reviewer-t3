@@ -1,0 +1,14 @@
+[Unit]
+Description=AI Product Intelligence Platform - FastAPI backend
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/reviewer-t3
+ExecStart=/home/ubuntu/reviewer-t3/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

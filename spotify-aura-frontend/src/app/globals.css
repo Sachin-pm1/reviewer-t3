@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --aura-green: #1DB954;
+  --aura-purple: #8B5CF6;
+  --aura-blue: #3B82F6;
+  --aura-pink: #EC4899;
+  --aura-teal: #14B8A6;
+  --aura-orange: #F97316;
+  --aura-bg: #050508;
+  --aura-card: rgba(255,255,255,0.04);
+  --aura-card-hover: rgba(255,255,255,0.08);
+  --aura-border: rgba(255,255,255,0.08);
+  --aura-border-hover: rgba(255,255,255,0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--aura-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+
+@keyframes aurora-shift {
+  0%,100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+@keyframes blob-float {
+  0%,100% { transform: translateY(0px) scale(1); }
+  50%     { transform: translateY(-24px) scale(1.06); }
+}
+@keyframes blob-pulse {
+  0%,100% { opacity: 0.25; }
+  50%     { opacity: 0.5; }
+}
+@keyframes slide-up {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:none; }
+}
+
+.aura-bg {
+  background: var(--aura-bg);
+  position: relative;
+  min-height: 100vh;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #1DB954 0%, #3B82F6 40%, #8B5CF6 70%, #EC4899 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: aurora-shift 5s ease infinite;
+}
+
+/* @layer components places these BEFORE Tailwind's utilities layer in the
+   compiled CSS, so a utility class (e.g. bg-emerald-500/10, border-emerald-
+   500/60 for a "selected" state) always wins over these defaults instead of
+   losing to them on source order despite equal specificity. Without this
+   layer, every `glass-card` element combined with a color utility (onboarding's
+   selected-option highlight, Commute/Discovery's gradient cards, etc.) would
+   silently keep glass-card's own background/border instead. */
+@layer components {
+  .glass-card {
+    background: var(--aura-card);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--aura-border);
+    border-radius: 20px;
+    transition: background .25s, border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .glass-card:hover {
+    background: var(--aura-card-hover);
+    border-color: var(--aura-border-hover);
+  }
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  animation: blob-float 9s ease-in-out infinite, blob-pulse 4s ease-in-out infinite;
+}
+
+.slide-up { animation: slide-up .4s ease-out both; }
+
+.energy-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg,#1DB954,#3B82F6);
+  transition: width 1s ease;
+}

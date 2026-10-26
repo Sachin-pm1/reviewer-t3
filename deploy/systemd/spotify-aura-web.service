@@ -1,0 +1,16 @@
+[Unit]
+Description=Spotify Aura - Next.js frontend
+After=network.target spotify-aura-api.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/reviewer-t3/spotify-aura-frontend
+ExecStart=/usr/bin/npm run start -- --port 3010
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=NEXT_PUBLIC_API_URL=http://localhost:8010
+
+[Install]
+WantedBy=multi-user.target

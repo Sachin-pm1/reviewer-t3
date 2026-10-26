@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./.venv/Scripts/python.exe -m pip install --upgrade pip -q)",
+      "Bash(./.venv/Scripts/python.exe -m pip install -q fastapi pydantic pydantic-settings python-dotenv \"sqlalchemy>=2\" aiosqlite greenlet loguru orjson tenacity httpx pytest pytest-asyncio anyio)",
+      "Bash(./.venv/Scripts/python.exe -m pytest -q)",
+      "Bash(./.venv/Scripts/python.exe -c ' *)",
+      "Bash(./.venv/Scripts/python.exe -m pip install -q \"uvicorn[standard]\")",
+      "Bash(./.venv/Scripts/python.exe -m uvicorn app.main:app --port 8123 --log-level warning)",
+      "Bash(rm -f data/app.db data/app.db-*)",
+      "Bash(rm -rf data/qdrant)",
+      "Bash(npm --version)",
+      "Bash(npx --version)",
+      "Bash(git --version)",
+      "Bash(npm ping *)",
+      "Bash(npm config *)",
+      "Bash(npm run *)",
+      "PowerShell(cd \"d:\\\\projects\\\\sachin task3\\\\frontend\"; $job = Start-Job { cd \"d:\\\\projects\\\\sachin task3\\\\frontend\"; npm run dev }; Start-Sleep 15; Receive-Job $job; $job.State)",
+      "PowerShell(netstat -ano)"
+    ],
+    "additionalDirectories": [
+      "D:\\projects\\sachin task3\\data"
+    ]
+  }
+}

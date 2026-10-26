@@ -1,0 +1,38 @@
+# Render Blueprint for the FastAPI backend.
+#
+# Usage: push to GitHub, then on Render use "New +" -> "Blueprint" and point it
+# at this repo. Render reads this file and provisions the service below.
+# Secrets (marked sync: false) must be pasted into the Render dashboard after
+# the service is created — never commit real keys here.
+#
+# Note: written against Render's blueprint spec as documented at the time this
+# was added; verify field names against https://render.com/docs/blueprint-spec
+# when you connect the repo, since the schema has changed across Render
+# versions (older accounts may need `env: docker` instead of `runtime: docker`).
+services:
+  - type: web
+    name: ai-product-intelligence-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false # paste your real key in the Render dashboard, not here
+      - key: ANTHROPIC_MODEL
+        value: claude-opus-4-8
+      - key: CORS_ORIGINS
+        value: "*" # Next.js proxies server-side, so this only matters for direct/API-docs access
+      - key: DATABASE_URL
+        value: sqlite+aiosqlite:///./data/app.db
+      - key: QDRANT_PATH
+        value: ./data/qdrant
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+    # Render's free plan has an ephemeral filesystem — SQLite/Qdrant data resets
+    # on every deploy and on idle spin-down. Fine for the Companion MVP (it's
+    # stateless and doesn't touch the DB). For durable Reviewer-engine data,
+    # upgrade to a paid instance + persistent disk, or point DATABASE_URL at a
+    # managed Postgres (Render offers a free Postgres tier) — no code change
+    # needed, see README "Database & migrations".

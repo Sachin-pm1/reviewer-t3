@@ -1,0 +1,17 @@
+[Unit]
+Description=AI Product Intelligence Platform - Next.js dashboard
+After=network.target reviewer-api.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/reviewer-t3/frontend
+# Build once at deploy time (`npm run build`), then this just serves it.
+ExecStart=/usr/bin/npm run start -- --port 3000
+Restart=on-failure
+RestartSec=5
+Environment=NODE_ENV=production
+Environment=NEXT_PUBLIC_API_URL=http://localhost:8000
+
+[Install]
+WantedBy=multi-user.target

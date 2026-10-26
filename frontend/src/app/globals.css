@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0f1115;
+  --panel: #171a21;
+  --panel-2: #1e222b;
+  --border: #2a2f3a;
+  --text: #e7e9ee;
+  --muted: #9aa3b2;
+  --accent: #5b8cff;
+  --accent-2: #34d399;
+  --danger: #f87171;
+  --warn: #fbbf24;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3a4050; }
+
+/* Markdown prose inside report previews */
+.prose-report {
+  color: var(--text);
+  line-height: 1.7;
+}
+.prose-report h1 { font-size: 1.3rem; font-weight: 700; margin: 0 0 .75rem; }
+.prose-report h2 { font-size: 1.1rem; font-weight: 700; margin: 1.5rem 0 .5rem; color: var(--text); border-bottom: 1px solid var(--border); padding-bottom: .3rem; }
+.prose-report h3 { font-size: .95rem; font-weight: 700; margin: 1rem 0 .4rem; color: var(--accent); }
+.prose-report p  { margin: .5rem 0; }
+.prose-report ul, .prose-report ol { padding-left: 1.3rem; margin: .5rem 0; }
+.prose-report li { margin: .25rem 0; }
+.prose-report strong { color: var(--text); font-weight: 700; }
+.prose-report code { background: var(--panel-2); border: 1px solid var(--border); padding: .1rem .35rem; border-radius: 4px; font-size: .82rem; font-family: ui-monospace, Consolas, monospace; }
+.prose-report blockquote { border-left: 3px solid var(--accent); padding-left: .75rem; color: var(--muted); margin: .75rem 0; }
+.prose-report table { width: 100%; border-collapse: collapse; margin: .75rem 0; font-size: .82rem; }
+.prose-report th { background: var(--panel-2); border: 1px solid var(--border); padding: .4rem .6rem; text-align: left; font-weight: 700; }
+.prose-report td { border: 1px solid var(--border); padding: .4rem .6rem; }
+
+/* Recharts tooltip dark theme */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--panel-2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+  font-size: .82rem !important;
+}
+.recharts-tooltip-label { color: var(--muted) !important; }
+
+/* Spinning loader */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; display: inline-block; }
+
+/* Fade-in for page sections */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.fade-in { animation: fadeIn .2s ease-out; }
+
+/* Hide scrollbar for horizontally-scrolling elements (e.g. mobile tab bars)
+   while keeping them scrollable via touch/trackpad/wheel. */
+.no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }

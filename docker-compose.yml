@@ -1,0 +1,49 @@
+# Optional production-shaped stack: API + PostgreSQL + Qdrant server.
+# Increment 1 runs fully local without this (SQLite + Qdrant local mode).
+# Bring it up with: docker compose up --build
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Switch the app from SQLite/local-Qdrant to the server stack.
+      DATABASE_URL: postgresql+asyncpg://aipi:aipi@db:5432/aipi
+      QDRANT_PATH: ""
+      QDRANT_URL: http://qdrant:6333
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-4-8}
+    depends_on:
+      db:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    volumes:
+      - ./data:/app/data
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: aipi
+      POSTGRES_PASSWORD: aipi
+      POSTGRES_DB: aipi
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aipi"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrantdata:/qdrant/storage
+
+volumes:
+  pgdata:
+  qdrantdata:

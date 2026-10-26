@@ -1,0 +1,41 @@
+# Core runtime dependencies for the AI Product Intelligence Platform (Increment 1).
+# Mirror of [project.dependencies] in pyproject.toml — use `pip install -e .` for the
+# editable install, or `pip install -r requirements.txt` if you prefer.
+
+# Web / API
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+
+# Config / validation
+pydantic>=2.7
+pydantic-settings>=2.3
+python-dotenv>=1.0
+
+# Database
+sqlalchemy>=2.0.30
+aiosqlite>=0.20
+asyncpg>=0.29       # only used by the optional Postgres (docker-compose) path
+alembic>=1.13
+greenlet>=3.0
+
+# Knowledge base
+qdrant-client>=1.9
+sentence-transformers>=3.0
+
+# AI
+anthropic>=0.40
+
+# Data collection (no-credential connectors only in increment 1)
+google-play-scraper>=1.2
+httpx>=0.27
+
+# Utilities
+loguru>=0.7
+orjson>=3.10
+tenacity>=8.3
+
+# Dev / tests
+pytest>=8.2
+pytest-asyncio>=0.23
+anyio>=4.4

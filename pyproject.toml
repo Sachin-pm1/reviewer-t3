@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-product-intelligence"
+version = "0.1.0"
+description = "AI Product Intelligence Platform — ingest customer feedback from any source, build a RAG knowledge base, and generate structured product insights with Claude."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "AI Product Intelligence Platform" }]
+
+dependencies = [
+    # Web / API
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    # Config / validation
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "python-dotenv>=1.0",
+    # Database
+    "sqlalchemy>=2.0.30",
+    "aiosqlite>=0.20",
+    "asyncpg>=0.29",
+    "alembic>=1.13",
+    "greenlet>=3.0",
+    # Knowledge base
+    "qdrant-client>=1.9",
+    "sentence-transformers>=3.0",
+    # AI
+    "anthropic>=0.40",
+    # Data collection (light, no-credential connectors only in increment 1)
+    "google-play-scraper>=1.2",
+    "httpx>=0.27",
+    # Utilities
+    "loguru>=0.7",
+    "orjson>=3.10",
+    "tenacity>=8.3",
+]
+
+[project.optional-dependencies]
+# Heavier / credentialed connectors and modeling — deferred to later increments.
+# Installing these is opt-in so the core stays light and runnable.
+collectors-extra = [
+    "praw>=7.7",            # Reddit
+    "app-store-scraper>=0.3",
+    "playwright>=1.44",     # generic website scraping
+    "beautifulsoup4>=4.12",
+    "pypdf>=4.2",
+    "python-docx>=1.1",
+    "feedparser>=6.0",      # RSS
+]
+modeling-extra = [
+    "bertopic>=0.16",
+    "spacy>=3.7",
+    "hdbscan>=0.8",
+    "scikit-learn>=1.5",
+]
+dev = [
+    "pytest>=8.2",
+    "pytest-asyncio>=0.23",
+    "anyio>=4.4",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
